@@ -2,6 +2,38 @@ import numpy as np
 
 
 class AdaptiveFilter:
+    ''' General adaptive algorithm class, only intended as a parent for LMS-like classes.
+    Signature:
+normLMS(
+    signal,
+    desired_signal,
+    weights,
+    **kwargs
+)
+Docstring:
+
+Parameters
+-------
+signal : numpy.ndarray
+desired_signal : numpy.ndarray
+weights : numpy.ndarray
+step_size : float
+
+Methods
+-------
+
+compute_correction(self, signal_vectorized, error)
+
+Inherited from AdaptiveFilter:
+vectorize_most_recent(most_recent_signal, filter_order)
+
+Inherited from AdaptiveFilter:
+adapt_weights()
+    Runs algorithm through all data points
+
+-------'''
+
+
     def __init__(self, signal, desired_signal, weights):
         self.signal: np.ndarray = signal
         self.desired_signal: np.ndarray = desired_signal

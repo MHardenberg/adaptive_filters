@@ -2,7 +2,7 @@ import numpy as np
 from adaptive_filters.AdaptiveFilter import AdaptiveFilter
 
 class normLMS(AdaptiveFilter):
-    ''' normalized LMS algorith class.
+    ''' normalized LMS algorithm class.
     Signature:
 normLMS(
     signal,
@@ -36,6 +36,7 @@ adapt_weights()
     Runs algorithm through all data points
 
 -------'''
+
     def __init__(self, signal, desired_signal, weights, **kwargs):
         self.signal: np.ndarray = signal
         self.desired_signal: np.ndarray = desired_signal

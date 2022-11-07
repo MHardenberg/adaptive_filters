@@ -2,7 +2,7 @@ import numpy as np
 from adaptive_filters.AdaptiveFilter import AdaptiveFilter
 
 class LMS(AdaptiveFilter):
-    ''' normalized LMS algorith class.
+    ''' LMS algorithm class.
     Signature:
 normLMS(
     signal,
