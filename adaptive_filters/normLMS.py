@@ -1,7 +1,8 @@
 import numpy as np
-from adaptive_filters.AdaptiveFilter import AdaptiveFilter
+from adaptive_filters.LMS import LMS
 
-class normLMS(AdaptiveFilter):
+
+class normLMS(LMS):
     ''' normalized LMS algorithm class.
     Signature:
 normLMS(
@@ -28,7 +29,7 @@ Methods
 -------
 compute_correction(self, signal_vectorized, error)
 
-Inherited from AdaptiveFilter:
+Inherited from LMS:
 vectorize_most_recent(most_recent_signal, filter_order)
 
 Inherited from AdaptiveFilter:
@@ -38,13 +39,7 @@ adapt_weights()
 -------'''
 
     def __init__(self, signal, desired_signal, weights, **kwargs):
-        self.signal: np.ndarray = signal
-        self.desired_signal: np.ndarray = desired_signal
-        self.samples: int = len(signal)
-
-        self.filter_order: int = len(weights)
-        self.weights: np.ndarray = np.zeros((self.filter_order, self.samples))
-        self.weights[:, 0] = weights
+        super().__init__(signal, desired_signal, weights, step_size=0)
 
         if 'mu_heuristic' in kwargs:
             self.heuristic_step_size = kwargs['mu_heuristic']
@@ -55,10 +50,6 @@ adapt_weights()
             self.zero_div_guard : float = kwargs['psi']
         else:
             self.zero_div_guard : float = .001
-
-        self.estimate: np.ndarray = np.zeros(signal.shape)
-        self.error: np.ndarray = np.zeros(self.samples - self.filter_order)
-
 
     def compute_correction(self, signal_vectorized, error):
         return 2 * self.heuristic_step_size /\
