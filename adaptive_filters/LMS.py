@@ -60,17 +60,17 @@ adapt_weights()
         return np.flip(most_recent_signal[index - filter_order: index])
 
     def adapt_weights(self):
-        for n in range(self.filter_order, self.samples - 1):
+        for n in range(self.filter_order, self.samples):
             signal_vectorized = self.vectorize_most_recent(self.signal[:n + 1], self.filter_order)
 
             # compute current estimate and error
-            self.estimate[n] = self.weights[:, n] @ signal_vectorized
+            self.estimate[n] = self.weights[:, n - 1] @ signal_vectorized
             self.error[n - self.filter_order] = self.desired_signal[n] - self.estimate[n]
 
             # compute lms correction of weights
             correction = self.compute_correction(signal_vectorized, self.error[n - self.filter_order])
 
             # adapt weights
-            self.weights[:, n + 1] = self.weights[:, n] + correction
+            self.weights[:, n] = self.weights[:, n - 1] + correction
 
         return self.weights[:, n]
